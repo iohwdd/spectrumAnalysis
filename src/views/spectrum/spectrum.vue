@@ -104,7 +104,6 @@
         :columns="columns"
         :showPagination="true"
         :dataSource="tableData"
-        :options="tableOptions"
         :fetch="loadDataList"
       >
         <template #specId="{ index, row }">
