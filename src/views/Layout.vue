@@ -187,15 +187,21 @@
       icon: 'icon-user-filling'
     },
     {
-      menuName: '标准库管理',
-      path: '/specLibAdmin',
-      icon: 'icon-article'
-    },
-
-    {
-      menuName: '算法库管理',
-      path: '/algoLibAdmin',
-      icon: 'icon-article'
+      menuName: '系统库管理',
+      path: '/libaryAdmin',
+      icon: 'icon-article',
+      childern:[
+          {
+          menuName: '标准库管理',
+          path: '/specLibAdmin',
+          icon: 'icon-article'
+        },
+        {
+          menuName: '算法库管理',
+          path: '/algoLibAdmin',
+          icon: 'icon-article'
+        },
+      ]
     },
     {
       menuName: '审核管理',
