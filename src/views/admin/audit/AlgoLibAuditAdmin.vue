@@ -8,6 +8,15 @@
       >
         <el-row class="row" type="flex">
           <el-col :span="4">
+            <el-form-item label="用户昵称">
+              <el-input
+                clearable
+                placeholder="请输入用户昵称"
+                v-model.trim="searchFormData.userName"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
             <el-form-item label="算法名称">
               <el-input
                 clearable
@@ -48,6 +57,9 @@
           :options="tableOptions"
           :fetch="loadDataList"
         >
+        <template #userName="{ index, row }">
+            <div>{{row.userName}}</div>
+        </template>
         <template #algoName="{ index, row }">
             <div>{{row.algoName}}</div>
         </template>
@@ -60,7 +72,8 @@
         <template #op="{ index, row}">
           <div>
             <el-button type="primary" size="small" @click="showDetail(row.algoDesc)">查看详情</el-button>
-            <el-button type="danger" size="small" @click="del">移除</el-button>
+            <el-button type="primary" size="small" @click="handlerAudit(1)">通过</el-button>
+            <el-button type="primary" size="small" @click="handlerAudit(2)">驳回</el-button>
           </div>
         </template>
     </Table>
@@ -81,6 +94,38 @@
         </div>
       </template>
     </el-dialog>
+    <el-dialog
+          v-model="refuVisiable"
+          title="驳回原因"
+          width="500"
+      >
+        <el-form
+          :model="formData"
+          :rules="rules"
+          ref="formDataRef"
+          label-width="80px"
+          @submit.prevent
+        >
+          <!--textarea输入-->
+          <el-form-item label="原因" prop="refuReason">
+            <el-input
+              clearable
+              placeholder="请输入驳回原因"
+              type="textarea"
+              :rows="5"
+              :maxlength="150"
+              resize="none"
+              show-word-limit
+              v-model="formData.refuReason"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button type="primary" @click="confirmRefu">确认</el-button>
+          </div>
+        </template>
+      </el-dialog>
   </div>
 </template>
 
@@ -89,6 +134,11 @@ import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 const searchFormData = ref({});
 const searchFormDataRef = ref();
+const formData = ref({});
+const formDataRef = ref();
+const rules = {
+  refuReason: [{ required: true, message: "请输入内容" }],
+};
 const processList = ref([
   { label: '光谱基准线扣除', value: '光谱基准线扣除' },
   { label: '平滑降噪', value: '平滑降噪' },
@@ -96,26 +146,32 @@ const processList = ref([
 ]);
 const columns = [
   {
+    label: '用户昵称',
+    prop: 'userName',
+    width: 280,
+    scopedSlots: 'userName'
+  },
+  {
     label: '算法名称',
     prop: 'algoName',
-    width: 400,
+    width: 280,
     scopedSlots: 'algoName'
   },
   {
     label: '算法类型',
     prop: 'algoType',
-    width: 400,
+    width: 280,
     scopedSlots: 'algoType'
   },
   {
     label: '版本号',
     prop: 'algoVersion',
-    width: 400,
+    width: 280,
     scopedSlots: 'algoVersion'
   },
   {
     label: '操作',
-    width: 170,
+    width: 250,
     scopedSlots: 'op'
   },
 ]
@@ -128,30 +184,35 @@ const tableData = {
 }
 tableData.list = [
   {
+    'userName':'大王',
     "algoName":'算法1',
     'algoType':'平滑降噪',
     'algoDesc':'算法描述balabala',
     'algoVersion':'1.0',
   },
   {
+    'userName':'大王',
     "algoName":'算法1',
     'algoType':'平滑降噪',
     'algoDesc':'算法描述balabala',
     'algoVersion':'1.0',
   },
   {
+    'userName':'大王',
     "algoName":'算法1',
     'algoType':'平滑降噪',
     'algoDesc':'算法描述balabala',
     'algoVersion':'1.0',
   },
   {
+    'userName':'大王',
     "algoName":'算法1',
     'algoType':'平滑降噪',
     'algoDesc':'算法描述balabala',
     'algoVersion':'1.0',
   },
   {
+    'userName':'大王',
     "algoName":'算法1',
     'algoType':'平滑降噪',
     'algoDesc':'算法描述balabala',
@@ -169,28 +230,31 @@ const showDetail = (desc) => {
   detailVisiable.value = true
   algoDesc.value = desc
 }
-const del = () => {
-  ElMessageBox.confirm(
-    '请确认将该算法从算法库中移除',
-    'Warning',
-    {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
+const refuVisiable = ref(false)
+const handlerAudit = (type) => {
+  if(type == 1) {
+    //通过
+    ElMessage({
+      type:'success',
+      message:'已通过'
+    })
+  }
+  if(type == 2) {
+    //驳回
+    refuVisiable.value = true
+  }
+}
+const confirmRefu = () => {
+  formDataRef.value.validate((valid) => {
+    if(!valid){
+      return
     }
-  )
-    .then(() => {
-      ElMessage({
-        type: 'success',
-        message: '删除成功',
-      })
+    ElMessage({
+      type:'error',
+      message:'已驳回'
     })
-    .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: '删除取消',
-      })
-    })
+    refuVisiable.value = false
+  })
 }
 </script>
 

@@ -66,6 +66,22 @@ const router = createRouter({
           ]
         },
         {
+          path:'/libary',
+          name:'系统库',
+          children:[
+            {
+              path:'spectrum',
+              name:'标准库',
+              component: () => import('../views/standardLibary/SpectrumLib.vue')
+            },
+            {
+              path:'algorithm',
+              name:'算法库',
+              component: () => import('../views/standardLibary/AlgorithmLib.vue')
+            }
+          ]
+        },
+        {
           path: '/userAdmin',
           name: '用户管理',
           component: () => import('../views/admin/UserAdmin.vue')
@@ -81,9 +97,25 @@ const router = createRouter({
           component: () => import('../views/admin/AlgoLibAdmin.vue')
         },
         {
-          path: '/auditAdmin',
+          path: '/audit',
           name: '审核管理',
-          component: () => import('../views/admin/AuditAdmin.vue')
+          children:[
+            {
+              path:'user',
+              name:'用户审核',
+              component:() => import('../views/admin/audit/UserAuditAdmin.vue')
+            },
+            {
+              path:'specLib',
+              name:'标准库审核',
+              component:() => import('../views/admin/audit/SpecLibAuditAdmin.vue')
+            },
+            {
+              path:'algoLib',
+              name:'算法库审核',
+              component:() => import('../views/admin/audit/AlgoLibAuditAdmin.vue')
+            },
+          ]
         },
         {
           path: '/logAdmin',

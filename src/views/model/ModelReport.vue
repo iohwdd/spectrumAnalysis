@@ -1,6 +1,6 @@
 <template>
 
-    <div class="ModelAnalysis" :class="{hidden:isHidden}">
+    <div class="ModelReport" :class="{hidden:isHidden}">
       <el-card style="width: 1350px;height: 350px; margin-left: 0; border-radius: 8px;" shadow="always">
         <p style="font-weight: 900; margin: 0;">分析报告</p>
         <br>
@@ -73,8 +73,11 @@
 
     </div>
 
-    <div id="picture" class="spec-image"  style="width: 1000px;height:600px;"></div>
+    <div id="picture" class="spec-image" style="width: 900px;height: 600px;">
+
     </div>
+    </div>
+
 
   </template>
 
@@ -166,10 +169,11 @@ onMounted(() => {
 .hidden {
     display: none;
 }
-.ModelAnalysis{
+.ModelReport{
+  /* border: 1px solid rgb(10, 10, 10);  */
         float: left;
         margin: 0;
-        height: 1800px;
+        height: auto;
         width: 1380px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
         border-radius: 8px;
@@ -211,7 +215,14 @@ onMounted(() => {
         height: auto;
         width: auto;
 }
-.spec-image {
-
+.spec-image{
+  /* border: 1px solid rgb(10, 10, 10);  */
+  float: left;
+        margin-left: 200px;
+        margin-top: 80px;
+        margin-bottom: 100px;
+        /* height: 500px;
+        width: 800px; */
 }
+
 </style>

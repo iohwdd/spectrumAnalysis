@@ -54,16 +54,10 @@
 
       <el-form-item label="光谱文件：" :label-width="formLabelWidth">
         <el-upload
-    v-model:file-list="form.file1"
     class="upload-demo"
     action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    multiple
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :limit="3"
-    :on-exceed="handleExceed"
   >
+
     <el-button type="primary">点击上传</el-button>
     <template #tip>
       <div class="el-upload__tip">
@@ -75,15 +69,9 @@
 
       <el-form-item label="光谱图片：" :label-width="formLabelWidth">
         <el-upload
-    v-model:file-list="form.file2"
     class="upload-demo"
     action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    multiple
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :limit="3"
-    :on-exceed="handleExceed"
+
   >
     <el-button type="primary">点击上传</el-button>
     <template #tip>
@@ -105,9 +93,73 @@
     </template>
   </el-dialog>
 
-  <el-button type="primary" style="margin-top: 50px;margin-left: 100px">导入标准库</el-button>
+  <!-- <el-button type="primary" style="margin-top: 50px;margin-left: 100px" @click="applyFormVisible = true">导入标准库</el-button>
 
-  <el-button type="primary" style="margin-top: 50px;margin-left: 100px">删除光谱</el-button>
+  <el-dialog v-model="applyFormVisible" title="申请导入标准库" width="500">
+    <el-form :model="applyForm">
+      <el-form-item label="光谱名称：" :label-width="formLabelWidth">
+        <el-input v-model="applyForm.name" autocomplete="off" />
+      </el-form-item>
+
+      <el-form-item label="被检测物质：" :label-width="formLabelWidth">
+        <el-input v-model="applyForm.name1" autocomplete="off" />
+      </el-form-item>
+
+      <el-form-item label="检测内容：" :label-width="formLabelWidth">
+        <el-input v-model="applyForm.name2" autocomplete="off" />
+      </el-form-item>
+
+      <el-form-item label="采用标准：" :label-width="formLabelWidth">
+        <el-select v-model="applyForm.standard" placeholder="请选择采用标准">
+          <el-option label="ISO" value="1" />
+          <el-option label="ASTM" value="2" />
+          <el-option label="国家标准" value="3" />
+          <el-option label="其他" value="4" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="光谱类型：" :label-width="formLabelWidth">
+        <el-select v-model="applyForm.type" placeholder="请选择光谱类型">
+          <el-option label="拉曼光谱" value="1" />
+          <el-option label="红外光谱" value="2" />
+          <el-option label="高光谱" value="3" />
+          <el-option label="近红外光谱" value="4" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="光谱描述：" :label-width="formLabelWidth">
+        <el-input
+    v-model="applyForm.desc"
+    style="width: 240px"
+    autosize
+    type="textarea"
+    placeholder="请输入"
+  />
+      </el-form-item>
+
+      <el-form-item label="光谱图谱：" :label-width="formLabelWidth">
+      <el-upload
+        class="upload-demo"
+        action="/your/upload/url"
+        :auto-upload="false">
+        <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
+    </el-form-item>
+
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="applyFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="applyFormVisible = false">
+          确认申请
+        </el-button>
+      </div>
+    </template>
+  </el-dialog> -->
+
+
+  <el-button type="primary" style="margin-top: 50px;margin-left: 100px">批量删除</el-button>
 
   <div class="MySpectrumTable">
 
@@ -121,7 +173,7 @@
     <el-table-column fixed="right" label="操作" min-width="120">
       <template #default>
         <el-button link type="primary" size="small" @click="handleClick">
-          重命名
+          申请入库
         </el-button>
         <el-button link type="primary" size="small">删除</el-button>
       </template>
@@ -143,12 +195,24 @@ import { reactive, ref} from 'vue'
 
 
 const dialogFormVisible = ref(false)
+const applyFormVisible = ref(false)
 const formLabelWidth = '140px'
 
 const form = reactive({
   name: '',
   type: '',
   name1: '',
+  name2: '',
+  standard: '',
+  file1: '',
+  file2: '',
+  desc: '',
+})
+
+const applyForm = reactive({
+  name: '',
+  name1: '',
+  type: '',
   name2: '',
   standard: '',
   file1: '',
@@ -242,6 +306,9 @@ const tableData = [
     file: 'No. 189, Grove St, Los Angeles',
   },
 ]
+
+
+
 </script>
 
 <style lang="scss" scoped>

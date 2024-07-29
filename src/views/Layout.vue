@@ -3,7 +3,7 @@
       <el-container>
         <el-aside class="aside" :style="{ width: asideWidth + 'px' }">
           <div class="logo">
-            <span v-if="!menuCollapse">光谱仪集成软件分析系统</span>
+            <span v-if="!menuCollapse">拉曼光谱分析系统</span>
           </div>
           <div class="menu-panel">
             <el-menu
@@ -136,7 +136,7 @@
       ]
     },
     {
-      menuName: '光谱处理与分析',
+      menuName: '光谱预处理',
       path: '/spectrum',
       icon: 'icon-article',
     },
@@ -165,6 +165,23 @@
       ]
     },
     {
+      menuName: '系统库',
+      path: '/libary',
+      icon: 'icon-article',
+      childern:[
+        {
+            menuName: '标准库',
+            path: '/libary/spectrum',
+            icon: 'icon-article'
+        },
+        {
+            menuName: '算法库',
+            path: '/libary/algorithm',
+            icon: 'icon-article'
+        },
+      ]
+    },
+    {
       menuName: '用户管理',
       path: '/userAdmin',
       icon: 'icon-user-filling'
@@ -174,6 +191,7 @@
       path: '/specLibAdmin',
       icon: 'icon-article'
     },
+
     {
       menuName: '算法库管理',
       path: '/algoLibAdmin',
@@ -181,8 +199,22 @@
     },
     {
       menuName: '审核管理',
-      path: '/auditAdmin',
-      icon: 'icon-eye'
+      path: '/audit',
+      icon: 'icon-eye',
+      childern:[
+        {
+          menuName:'用户审核',
+          path:'/audit/user'
+        },
+        {
+          menuName:'标准库审核',
+          path:'/audit/specLib'
+        },
+        {
+          menuName:'算法库审核',
+          path:'/audit/algoLib'
+        },
+      ]
     },
     {
       menuName: '日志管理',

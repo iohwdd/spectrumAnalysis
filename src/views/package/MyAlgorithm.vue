@@ -13,7 +13,6 @@
                   clearable
                   placeholder="请输入算法名称"
                   v-model.trim="searchFormData.algoName"
-                  @keyup.native="loadDataList"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -47,7 +46,70 @@
               </el-button-group>
             </el-col>
             <el-col :span="4">
-              <el-button type="">上传算法</el-button>
+              <el-button type="primary" @click="uploadVisable = true">上传算法</el-button>
+              <el-dialog
+                v-model="uploadVisable"
+                title="上传算法"
+                width="500"
+                :before-close="handleClose"
+              >
+                <div class="upload-form">
+                  <el-form
+                  :model="formData"
+                  :rules="rules2Algo"
+                  ref="formDataRef"
+                  label-width="80px"
+                  @submit.prevent
+                  >
+                    <el-form-item label="算法名称" prop="algoName" >
+                      <el-input clearable placeholder="提示信息" v-model.trim="formData.algoName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="算法类别" prop="algoType" >
+                      <el-cascader
+                        placeholder="请选择算法类别"
+                        :options="algoTypeList"
+                        :props="algoProps"
+                        clearable
+                        v-model="formData.algoType"
+                        :style="{ width: '100%' }"
+                      />
+                    </el-form-item>
+                    <el-form-item label="算法描述" prop="algoDesc">
+                        <el-input
+                          clearable
+                          placeholder="提示信息"
+                          type="textarea"
+                          :rows="5"
+                          :maxlength="150"
+                          resize="none"
+                          show-word-limit
+                          v-model.trim="formData.algoDesc"
+                      ></el-input>
+                    </el-form-item>
+                    <el-form-item label="算法文件" prop="algoFile">
+                      <el-upload
+                        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                      >
+                        <el-button type="primary">选择算法文件</el-button>
+                        <template #tip>
+                          <div class="el-upload__tip">
+                            jar/py files with a size less than 10MB.
+                          </div>
+                        </template>
+                      </el-upload>
+                    </el-form-item>
+                  </el-form>
+                </div>
+
+                <template #footer>
+                  <div class="dialog-footer">
+                    <el-button @click="uploadVisable = false">取消</el-button>
+                    <el-button type="primary" @click="upload">
+                      上传
+                    </el-button>
+                  </div>
+                </template>
+              </el-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -73,11 +135,34 @@
         </template>
         <template #op="{ index, row }">
             <div>
+              <span class="a-link" @click="showApply">申请入库</span>
               <span class="a-link">下载</span>
               <span class="a-link">删除</span>
             </div>
         </template>
     </Table>
+    <el-dialog
+        v-model="applyVisiable"
+        title="上传算法"
+        width="500"
+    >
+      <div class="apply-panel">
+        <el-input
+            clearable
+            placeholder="请简要描述你的算法..."
+            type="textarea"
+            :rows="5"
+            :maxlength="150"
+            resize="none"
+            show-word-limit
+            v-model.trim="formData.algoDesc"
+        ></el-input>
+        <el-button type="primary" class="apply-button">
+          申请
+        </el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -88,6 +173,8 @@ const tableOptions = ref({
   selectType: 'checkbox',
   extHeight: 110
 })
+const uploadVisable = ref(false)
+const applyVisiable = ref(false)
 const rowClick = () => {}
 
 const columns = [
@@ -112,13 +199,13 @@ const columns = [
   {
     label: '上传时间',
     prop: 'time',
-    width: 300,
+    width: 200,
     scopedSlots: 'time'
   },
   {
     label: '操作',
     prop: 'op',
-    width: 100,
+    width: 300,
     scopedSlots: 'op'
   },
 ]
@@ -217,6 +304,12 @@ const searchFormDataRef = ref();
 const rules = {
   title: [{ required: true, message: "请输入内容" }],
 };
+//算法上传
+const formData = ref({});
+const formDataRef = ref();
+const rules2Algo = {
+  title: [{ required: true, message: "请输入内容" }],
+};
 const algoProps = {
   multiple: false,
   checkStrictly: true,
@@ -237,7 +330,10 @@ const algoTypeList = [
     'algoType':'特征峰识别'
   },
 ]
-
+const showApply = () => {
+  applyVisiable.value = true
+  formData.value.algoDesc = ''
+}
 </script>
 
 <style lang="scss" scoped>
@@ -246,5 +342,41 @@ const algoTypeList = [
       color: #409eff;
       text-decoration: none;
       cursor: pointer;
-    }
+}
+.upload-form {
+  margin: 20px;
+}
+.dialog-footer {
+  margin: 0px 20px 20px 0px;
+}
+.apply-panel {
+  position: relative; /* 设置为相对定位，以便绝对定位子元素 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end; /* 使得元素在交叉轴的末端对齐 */
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  .el-textarea {
+    flex-grow: 1; /* 让输入框占据剩余空间 */
+    margin-bottom: 10px; /* 与按钮之间的间距 */
+  }
+
+  .el-textarea__inner {
+    border-color: #dcdfe6; /* 输入框边框颜色 */
+    border-radius: 4px; /* 输入框边框圆角 */
+    padding: 10px; /* 输入框内边距 */
+    resize: none; /* 禁止调整大小 */
+    font-size: 14px; /* 字体大小 */
+  }
+
+  .el-button {
+    padding: 8px 20px; /* 按钮内边距 */
+    border-radius: 20px; /* 按钮边框圆角 */
+    font-size: 16px; /* 字体大小 */
+  }
+}
 </style>
