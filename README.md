@@ -1,4 +1,4 @@
-# 光谱分析系统-前端1
+# 光谱分析系统-前端
 
 This template should help get you started developing with Vue 3 in Vite.
 
