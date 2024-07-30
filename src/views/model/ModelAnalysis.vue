@@ -125,14 +125,7 @@
         </el-form-item>
 
         <el-form-item style="margin-top: 50px; margin-left: 550px">
-          <el-button
-            type="primary"
-            @click="
-              onSubmit()
-              toModelAnalysis3()
-            "
-            >确定</el-button
-          >
+          <el-button type="primary" @click="toModelAnalysis3()">确定</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -533,10 +526,6 @@ const formInline = reactive({
   region: '',
   date: ''
 })
-
-const onSubmit = () => {
-  console.log('submit!')
-}
 
 const test = () => {}
 
