@@ -51,37 +51,42 @@
       </el-form>
     </div>
     <Table
-          :columns="columns"
-          :showPagination="true"
-          :dataSource="tableData"
-          :options="tableOptions"
-          :fetch="loadDataList"
-        >
-        <template #userName="{ index, row }">
-            <div>{{row.userName}}</div>
-        </template>
-        <template #algoName="{ index, row }">
-            <div>{{row.algoName}}</div>
-        </template>
-        <template #algoType="{ index, row }">
-            <div>{{row.algoType}}</div>
-        </template>
-        <template #algoVersion="{ index, row }">
-            <div>{{row.algoVersion}}</div>
-        </template>
-        <template #op="{ index, row}">
-          <div>
-            <el-button type="primary" size="small" @click="showDetail(row.algoDesc)">查看详情</el-button>
-            <el-button type="primary" size="small" @click="handlerAudit(1)">通过</el-button>
-            <el-button type="primary" size="small" @click="handlerAudit(2)">驳回</el-button>
-          </div>
-        </template>
-    </Table>
-    <el-dialog
-        v-model="detailVisiable"
-        title="算法详情"
-        width="500"
+      :columns="columns"
+      :showPagination="true"
+      :dataSource="tableData"
+      :options="tableOptions"
+      :fetch="loadDataList"
     >
+      <template #userName="{ index, row }">
+        <div>{{ row.userName }}</div>
+      </template>
+      <template #algoName="{ index, row }">
+        <div>{{ row.algoName }}</div>
+      </template>
+      <template #algoType="{ index, row }">
+        <div>{{ row.algoType }}</div>
+      </template>
+      <template #algoVersion="{ index, row }">
+        <div>{{ row.algoVersion }}</div>
+      </template>
+      <template #op="{ index, row }">
+        <div>
+          <el-button
+            type="primary"
+            size="small"
+            @click="showDetail(row.algoDesc)"
+            >查看详情</el-button
+          >
+          <el-button type="primary" size="small" @click="handlerAudit(1)"
+            >通过</el-button
+          >
+          <el-button type="primary" size="small" @click="handlerAudit(2)"
+            >驳回</el-button
+          >
+        </div>
+      </template>
+    </Table>
+    <el-dialog v-model="detailVisiable" title="算法详情" width="500">
       <div class="detail">
         <div class="desc">{{ algoDesc }}</div>
       </div>
@@ -94,56 +99,52 @@
         </div>
       </template>
     </el-dialog>
-    <el-dialog
-          v-model="refuVisiable"
-          title="驳回原因"
-          width="500"
+    <el-dialog v-model="refuVisiable" title="驳回原因" width="500">
+      <el-form
+        :model="formData"
+        :rules="rules"
+        ref="formDataRef"
+        label-width="80px"
+        @submit.prevent
       >
-        <el-form
-          :model="formData"
-          :rules="rules"
-          ref="formDataRef"
-          label-width="80px"
-          @submit.prevent
-        >
-          <!--textarea输入-->
-          <el-form-item label="原因" prop="refuReason">
-            <el-input
-              clearable
-              placeholder="请输入驳回原因"
-              type="textarea"
-              :rows="5"
-              :maxlength="150"
-              resize="none"
-              show-word-limit
-              v-model="formData.refuReason"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <div class="dialog-footer">
-            <el-button type="primary" @click="confirmRefu">确认</el-button>
-          </div>
-        </template>
-      </el-dialog>
+        <!--textarea输入-->
+        <el-form-item label="原因" prop="refuReason">
+          <el-input
+            clearable
+            placeholder="请输入驳回原因"
+            type="textarea"
+            :rows="5"
+            :maxlength="150"
+            resize="none"
+            show-word-limit
+            v-model="formData.refuReason"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="confirmRefu">确认</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-const searchFormData = ref({});
-const searchFormDataRef = ref();
-const formData = ref({});
-const formDataRef = ref();
+const searchFormData = ref({})
+const searchFormDataRef = ref()
+const formData = ref({})
+const formDataRef = ref()
 const rules = {
-  refuReason: [{ required: true, message: "请输入内容" }],
-};
+  refuReason: [{ required: true, message: '请输入内容' }]
+}
 const processList = ref([
   { label: '光谱基准线扣除', value: '光谱基准线扣除' },
   { label: '平滑降噪', value: '平滑降噪' },
-  { label:'特征波长提取',value:'特征波长提取'}
-]);
+  { label: '特征波长提取', value: '特征波长提取' }
+])
 const columns = [
   {
     label: '用户昵称',
@@ -173,51 +174,51 @@ const columns = [
     label: '操作',
     width: 250,
     scopedSlots: 'op'
-  },
+  }
 ]
 const tableData = {
-  "totalCount":3, //总记录数
-  "pageSize":50,//分页大小
-  "pageNo":1,//页码
-  "pageTotal":1,//总页数
-  'list':[]
+  totalCount: 3, //总记录数
+  pageSize: 50, //分页大小
+  pageNo: 1, //页码
+  pageTotal: 1, //总页数
+  list: []
 }
 tableData.list = [
   {
-    'userName':'大王',
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    userName: '大王',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    'userName':'大王',
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    userName: '大王',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    'userName':'大王',
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    userName: '大王',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    'userName':'大王',
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    userName: '大王',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    'userName':'大王',
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
-  },
+    userName: '大王',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
+  }
 ]
 tableData.totalCount = tableData.list.length
 const tableOptions = ref({
@@ -232,26 +233,26 @@ const showDetail = (desc) => {
 }
 const refuVisiable = ref(false)
 const handlerAudit = (type) => {
-  if(type == 1) {
+  if (type == 1) {
     //通过
     ElMessage({
-      type:'success',
-      message:'已通过'
+      type: 'success',
+      message: '已通过'
     })
   }
-  if(type == 2) {
+  if (type == 2) {
     //驳回
     refuVisiable.value = true
   }
 }
 const confirmRefu = () => {
   formDataRef.value.validate((valid) => {
-    if(!valid){
+    if (!valid) {
       return
     }
     ElMessage({
-      type:'error',
-      message:'已驳回'
+      type: 'error',
+      message: '已驳回'
     })
     refuVisiable.value = false
   })
