@@ -27,40 +27,36 @@
       </el-col>
     </el-row>
     <Table
-          :columns="columns"
-          :showPagination="true"
-          :dataSource="tableData"
-          :options="tableOptions"
-          :fetch="loadDataList"
-        >
-        <template #spectrumName="{ index, row }">
-            <div>{{row.spectrumName}}</div>
-        </template>
-        <template #type="{ index, row }">
-            <div>{{row.type}}</div>
-        </template>
-        <template #standard="{ index, row }">
-            <div>{{ row.standard }}</div>
-        </template>
-        <template #substance="{ index, row }">
-            <div>{{row.substance}}</div>
-        </template>
-        <template #component="{ index, row }">
-            <div>{{row.component}}</div>
-        </template>
-        <template #op="{ index, row }">
-            <div>
-              <span class="a-link" @click="descVisiable = true">查看光谱</span>
-              <span class="a-link">下载</span>
-            </div>
-        </template>
-    </Table>
-    <el-dialog
-        v-model="descVisiable"
-        title="光谱详情"
-        width="500"
+      :columns="columns"
+      :showPagination="true"
+      :dataSource="tableData"
+      :options="tableOptions"
+      :fetch="loadDataList"
     >
-      <img src="../../assets/光谱主界面背景.jpg" width="100%"/>
+      <template #spectrumName="{ index, row }">
+        <div>{{ row.spectrumName }}</div>
+      </template>
+      <template #type="{ index, row }">
+        <div>{{ row.type }}</div>
+      </template>
+      <template #standard="{ index, row }">
+        <div>{{ row.standard }}</div>
+      </template>
+      <template #substance="{ index, row }">
+        <div>{{ row.substance }}</div>
+      </template>
+      <template #component="{ index, row }">
+        <div>{{ row.component }}</div>
+      </template>
+      <template #op="{ index, row }">
+        <div>
+          <span class="a-link" @click="descVisiable = true">查看光谱</span>
+          <span class="a-link">下载</span>
+        </div>
+      </template>
+    </Table>
+    <el-dialog v-model="descVisiable" title="光谱详情" width="500">
+      <img src="../../assets/光谱主界面背景.jpg" width="100%" />
       <span>光谱描述balabala...</span>
       <template #footer>
         <div class="dialog-footer">
@@ -112,49 +108,49 @@ const columns = [
     prop: 'op',
     width: 200,
     scopedSlots: 'op'
-  },
+  }
 ]
 const tableData = {
-  "totalCount":3, //总记录数
-  "pageSize":50,//分页大小
-  "pageNo":1,//页码
-  "pageTotal":1,//总页数
-  'list':[]
+  totalCount: 3, //总记录数
+  pageSize: 50, //分页大小
+  pageNo: 1, //页码
+  pageTotal: 1, //总页数
+  list: []
 }
 
 tableData.list = [
   {
-    'spectrumName':'光谱1',
-    'type':'拉曼光谱',
-    'standard':'ISO',
-    'substance':'被检测物1',
-    'component':'检测成分1',
+    spectrumName: '光谱1',
+    type: '拉曼光谱',
+    standard: 'ISO',
+    substance: '被检测物1',
+    component: '检测成分1'
   },
   {
-    'spectrumName':'光谱1',
-    'type':'拉曼光谱',
-    'standard':'ISO',
-    'substance':'被检测物1',
-    'component':'检测成分1',
+    spectrumName: '光谱1',
+    type: '拉曼光谱',
+    standard: 'ISO',
+    substance: '被检测物1',
+    component: '检测成分1'
   },
   {
-    'spectrumName':'光谱1',
-    'type':'拉曼光谱',
-    'standard':'ISO',
-    'substance':'被检测物1',
-    'component':'检测成分1',
-  },
+    spectrumName: '光谱1',
+    type: '拉曼光谱',
+    standard: 'ISO',
+    substance: '被检测物1',
+    component: '检测成分1'
+  }
 ]
 tableData.totalCount = tableData.list.length
 const tableOptions = ref({
   selectType: 'checkbox',
   extHeight: 110
 })
-const searchFormData = ref({});
-const searchFormDataRef = ref();
+const searchFormData = ref({})
+const searchFormDataRef = ref()
 const rules = {
-  title: [{ required: true, message: "请输入内容" }],
-};
+  title: [{ required: true, message: '请输入内容' }]
+}
 </script>
 
 <style lang="scss" scoped>
@@ -180,5 +176,4 @@ const rules = {
 .el-form-item {
   margin-bottom: 0; /* 移除表单项的底部外边距 */
 }
-
 </style>

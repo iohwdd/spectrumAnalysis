@@ -10,10 +10,10 @@ import 'element-plus/dist/index.css'
 import '@/assets/icon/iconfont.css'
 const pinia = createPinia()
 const app = createApp(App)
-app.component('Table',Table)
+app.component('Table', Table)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-  }
+  app.component(key, component)
+}
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)

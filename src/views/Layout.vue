@@ -1,50 +1,50 @@
 <template>
-    <div class="layout-body">
-      <el-container>
-        <el-aside class="aside" :style="{ width: asideWidth + 'px' }">
-          <div class="logo">
-            <span v-if="!menuCollapse">拉曼光谱分析系统</span>
-          </div>
-          <div class="menu-panel">
-            <el-menu
-              :default-openeds="defalutOpends"
-              :collapse-transition="false"
-              :collapse="menuCollapse"
-              :default-active="defaultActive"
-              router
-              background-color="#3d3c4a"
-              active-text-color="#fff"
-              text-color="#fff"
-              class="el-menu-vertical-demo"
-            >
-              <template v-for="item in menuList" :key="item.path">
-                <el-sub-menu v-if="item.childern" :index="item.path">
-                  <template #title>
-                    <i :class="['iconfont', item.icon]"></i>
-                    <span class="menu-name">{{ item.menuName }}</span>
-                  </template>
-                  <el-menu-item
-                    v-for="subItem in item.childern"
-                    :index="subItem.path"
-                    :key="subItem.path"
-                  >
-                    <span class="menu-name">{{ subItem.menuName }}</span>
-                  </el-menu-item>
-                </el-sub-menu>
-                <el-menu-item v-else :index="item.path">
-                  <template #title>
-                    <i :class="['iconfont', item.icon]"></i>
-                    <span class="menu-name">{{ item.menuName }}</span>
-                  </template>
+  <div class="layout-body">
+    <el-container>
+      <el-aside class="aside" :style="{ width: asideWidth + 'px' }">
+        <div class="logo">
+          <span v-if="!menuCollapse">拉曼光谱分析系统</span>
+        </div>
+        <div class="menu-panel">
+          <el-menu
+            :default-openeds="defalutOpends"
+            :collapse-transition="false"
+            :collapse="menuCollapse"
+            :default-active="defaultActive"
+            router
+            background-color="#3d3c4a"
+            active-text-color="#fff"
+            text-color="#fff"
+            class="el-menu-vertical-demo"
+          >
+            <template v-for="item in menuList" :key="item.path">
+              <el-sub-menu v-if="item.childern" :index="item.path">
+                <template #title>
+                  <i :class="['iconfont', item.icon]"></i>
+                  <span class="menu-name">{{ item.menuName }}</span>
+                </template>
+                <el-menu-item
+                  v-for="subItem in item.childern"
+                  :index="subItem.path"
+                  :key="subItem.path"
+                >
+                  <span class="menu-name">{{ subItem.menuName }}</span>
                 </el-menu-item>
-              </template>
-            </el-menu>
-          </div>
-        </el-aside>
-        <el-container>
-          <el-header class="header">
-            <!-- 收起侧边栏 -->
-            <!-- <div
+              </el-sub-menu>
+              <el-menu-item v-else :index="item.path">
+                <template #title>
+                  <i :class="['iconfont', item.icon]"></i>
+                  <span class="menu-name">{{ item.menuName }}</span>
+                </template>
+              </el-menu-item>
+            </template>
+          </el-menu>
+        </div>
+      </el-aside>
+      <el-container>
+        <el-header class="header">
+          <!-- 收起侧边栏 -->
+          <!-- <div
               :class="[
                 'op-menu',
                 'iconfont',
@@ -52,193 +52,192 @@
               ]"
               @click="opMenu"
             ></div> -->
-            <!-- 面包屑 -->
-            <div class="menu-bread">
-              <el-breadcrumb>
-                <template
-                  v-for="(item, index) in menuBreadCrumbList"
-                  :key="index"
-                >
-                  <el-breadcrumb-item v-if="item.name">
-                    {{ item.name }}
-                  </el-breadcrumb-item>
-                </template>
-              </el-breadcrumb>
-            </div>
-          </el-header>
-          <el-main class="main-content">
-            <!-- 标签栏 -->
-            <div class="tag-content">
-              <el-tabs
-                type="card"
-                v-model="defaultActive"
-                @tab-change="tabClick"
-                @edit="editTab"
+          <!-- 面包屑 -->
+          <div class="menu-bread">
+            <el-breadcrumb>
+              <template
+                v-for="(item, index) in menuBreadCrumbList"
+                :key="index"
               >
-                <el-tab-pane
-                  v-for="(item, index) in tabList"
-                  :key="index"
-                  :name="item.path"
-                  :label="item.menuName"
-                  :closable="tabList.length > 1"
-                >
-                </el-tab-pane>
-              </el-tabs>
-            </div>
-            <div class="content-body">
-              <router-view />
-            </div>
-          </el-main>
-        </el-container>
+                <el-breadcrumb-item v-if="item.name">
+                  {{ item.name }}
+                </el-breadcrumb-item>
+              </template>
+            </el-breadcrumb>
+          </div>
+        </el-header>
+        <el-main class="main-content">
+          <!-- 标签栏 -->
+          <div class="tag-content">
+            <el-tabs
+              type="card"
+              v-model="defaultActive"
+              @tab-change="tabClick"
+              @edit="editTab"
+            >
+              <el-tab-pane
+                v-for="(item, index) in tabList"
+                :key="index"
+                :name="item.path"
+                :label="item.menuName"
+                :closable="tabList.length > 1"
+              >
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <div class="content-body">
+            <router-view />
+          </div>
+        </el-main>
       </el-container>
-    </div>
-  </template>
+    </el-container>
+  </div>
+</template>
 
-  <script setup>
-  import {
-    ref,
-    reactive,
-    getCurrentInstance,
-    nextTick,
-    watch,
-    onMounted
-  } from 'vue'
-  import { useRouter, useRoute } from 'vue-router'
-  const route = useRoute()
-  const router = useRouter()
-  // onMounted(() => {
-  //   let userInfo = proxy.VueCookies.get('userInfo')
-  //   if (userInfo == null) {
-  //     proxy.Message.error('请先登录')
-  //     router.push('/login')
-  //   }
-  // })
-  // 系统菜单
-  const menuList = [
-    {
-      menuName: '用户中心',
-      path: '/ucenter',
-      icon: 'icon-account',
-      childern: [
-        {
-          menuName: '个人信息',
-          path: '/ucenter/about'
-        },
-        {
-          menuName: '申请成为管理员',
-          path: '/ucenter/apply'
-        },
-        {
-          menuName: '修改密码',
-          path: '/ucenter/modifyPassword'
-        }
-
-      ]
-    },
-    {
-      menuName: '光谱预处理',
-      path: '/spectrum',
-      icon: 'icon-article',
-    },
-    {
-      menuName: '建模分析',
-      path: '/model',
-      icon: 'icon-article',
-    },
-    {
-      menuName: '收藏夹',
-      path: '/package',
-      icon: 'icon-login',
-      childern: [
-        {
-          menuName: '我的算法',
-          path: '/package/algorithm'
-        },
-        {
-          menuName: '我的光谱',
-          path: '/package/spectrum'
-        },
-        {
-          menuName: '回收站',
-          path: '/package/recycle'
-        }
-      ]
-    },
-    {
-      menuName: '系统库',
-      path: '/libary',
-      icon: 'icon-article',
-      childern:[
-        {
-            menuName: '标准库',
-            path: '/libary/spectrum',
-            icon: 'icon-article'
-        },
-        {
-            menuName: '算法库',
-            path: '/libary/algorithm',
-            icon: 'icon-article'
-        },
-      ]
-    },
-    {
-      menuName: '用户管理',
-      path: '/userAdmin',
-      icon: 'icon-user-filling'
-    },
-    {
-      menuName: '系统库管理',
-      path: '/libaryAdmin',
-      icon: 'icon-article',
-      childern:[
-          {
-          menuName: '标准库管理',
-          path: '/specLibAdmin',
-          icon: 'icon-article'
-        },
-        {
-          menuName: '算法库管理',
-          path: '/algoLibAdmin',
-          icon: 'icon-article'
-        },
-      ]
-    },
-    {
-      menuName: '审核管理',
-      path: '/audit',
-      icon: 'icon-eye',
-      childern:[
-        {
-          menuName:'用户审核',
-          path:'/audit/user'
-        },
-        {
-          menuName:'标准库审核',
-          path:'/audit/specLib'
-        },
-        {
-          menuName:'算法库审核',
-          path:'/audit/algoLib'
-        },
-      ]
-    },
-    {
-      menuName: '日志管理',
-      path: '/logAdmin',
-      icon: 'icon-article'
-    },
-    {
-      menuName: '类型管理',
-      path: '/typeAdmin',
-      icon: 'icon-article'
-    },
-    {
-      menuName: '备份与还原',
-      path: '/dataAdmin',
-      icon:'icon-settings'
-    }
-  ]
-  const menuMap = ref({})
+<script setup>
+import {
+  ref,
+  reactive,
+  getCurrentInstance,
+  nextTick,
+  watch,
+  onMounted
+} from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+const route = useRoute()
+const router = useRouter()
+// onMounted(() => {
+//   let userInfo = proxy.VueCookies.get('userInfo')
+//   if (userInfo == null) {
+//     proxy.Message.error('请先登录')
+//     router.push('/login')
+//   }
+// })
+// 系统菜单
+const menuList = [
+  {
+    menuName: '用户中心',
+    path: '/ucenter',
+    icon: 'icon-account',
+    childern: [
+      {
+        menuName: '个人信息',
+        path: '/ucenter/about'
+      },
+      {
+        menuName: '申请成为管理员',
+        path: '/ucenter/apply'
+      },
+      {
+        menuName: '修改密码',
+        path: '/ucenter/modifyPassword'
+      }
+    ]
+  },
+  {
+    menuName: '光谱预处理',
+    path: '/spectrum',
+    icon: 'icon-article'
+  },
+  {
+    menuName: '建模分析',
+    path: '/model',
+    icon: 'icon-article'
+  },
+  {
+    menuName: '收藏夹',
+    path: '/package',
+    icon: 'icon-login',
+    childern: [
+      {
+        menuName: '我的算法',
+        path: '/package/algorithm'
+      },
+      {
+        menuName: '我的光谱',
+        path: '/package/spectrum'
+      },
+      {
+        menuName: '回收站',
+        path: '/package/recycle'
+      }
+    ]
+  },
+  {
+    menuName: '系统库',
+    path: '/libary',
+    icon: 'icon-article',
+    childern: [
+      {
+        menuName: '标准库',
+        path: '/libary/spectrum',
+        icon: 'icon-article'
+      },
+      {
+        menuName: '算法库',
+        path: '/libary/algorithm',
+        icon: 'icon-article'
+      }
+    ]
+  },
+  {
+    menuName: '用户管理',
+    path: '/userAdmin',
+    icon: 'icon-user-filling'
+  },
+  {
+    menuName: '系统库管理',
+    path: '/libaryAdmin',
+    icon: 'icon-article',
+    childern: [
+      {
+        menuName: '标准库管理',
+        path: '/specLibAdmin',
+        icon: 'icon-article'
+      },
+      {
+        menuName: '算法库管理',
+        path: '/algoLibAdmin',
+        icon: 'icon-article'
+      }
+    ]
+  },
+  {
+    menuName: '审核管理',
+    path: '/audit',
+    icon: 'icon-eye',
+    childern: [
+      {
+        menuName: '用户审核',
+        path: '/audit/user'
+      },
+      {
+        menuName: '标准库审核',
+        path: '/audit/specLib'
+      },
+      {
+        menuName: '算法库审核',
+        path: '/audit/algoLib'
+      }
+    ]
+  },
+  {
+    menuName: '日志管理',
+    path: '/logAdmin',
+    icon: 'icon-article'
+  },
+  {
+    menuName: '类型管理',
+    path: '/typeAdmin',
+    icon: 'icon-article'
+  },
+  {
+    menuName: '备份与还原',
+    path: '/dataAdmin',
+    icon: 'icon-settings'
+  }
+]
+const menuMap = ref({})
 
 //默认展开的菜单
 const defalutOpends = ref([])
@@ -246,8 +245,8 @@ const init = () => {
   menuList.forEach((item) => {
     defalutOpends.value.push(item.path)
     menuMap[item.path] = item
-    if(item.childern != null) {
-        item.childern.forEach((subItem) => {
+    if (item.childern != null) {
+      item.childern.forEach((subItem) => {
         menuMap[subItem.path] = subItem
       })
     }
@@ -313,7 +312,7 @@ watch(
   },
   { immediate: true, deep: true }
 )
-  </script>
+</script>
 <style lang="scss" scoped>
 .layout-body {
   .aside {
@@ -354,7 +353,9 @@ watch(
     }
     .el-menu-item {
       background: #2b2b35;
-      transition: background 0.3s, color 0.3s;
+      transition:
+        background 0.3s,
+        color 0.3s;
     }
     .el-menu-item.is-active {
       color: #ffca28;
@@ -426,4 +427,3 @@ watch(
   }
 }
 </style>
-

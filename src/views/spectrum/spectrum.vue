@@ -88,17 +88,17 @@
     <el-divider class="divider" />
     <div class="history-panel">
       <div class="title">历史操作记录</div>
-        <div class="demo-date-picker">
-          <div class="block">
-            <el-date-picker
-              v-model="dataRange"
-              type="daterange"
-              start-placeholder="Start Date"
-              end-placeholder="End Date"
-            />
-            <el-button type="primary" style="margin-left: 10px;">搜索</el-button>
-          </div>
-    </div>
+      <div class="demo-date-picker">
+        <div class="block">
+          <el-date-picker
+            v-model="dataRange"
+            type="daterange"
+            start-placeholder="Start Date"
+            end-placeholder="End Date"
+          />
+          <el-button type="primary" style="margin-left: 10px">搜索</el-button>
+        </div>
+      </div>
       <Table
         class="history-table"
         :columns="columns"
@@ -141,15 +141,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import SpectrumProcess from './SpectrumProcess.vue';
-import { ElMessage } from 'element-plus';
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import SpectrumProcess from './SpectrumProcess.vue'
+import { ElMessage } from 'element-plus'
 const dataRange = ref()
 
-const router = useRouter();
-const isHidden = ref(false);
-const formDataRef = ref(null);
+const router = useRouter()
+const isHidden = ref(false)
+const formDataRef = ref(null)
 
 const formData = ref({
   spectrumName: '',
@@ -158,7 +158,7 @@ const formData = ref({
   substance: '',
   component: '',
   desc: ''
-});
+})
 
 const rules = {
   spectrumName: [{ required: true, message: '请输入光谱名称' }],
@@ -167,17 +167,32 @@ const rules = {
   substance: [{ required: true, message: '请输入检测物质' }],
   component: [{ required: true, message: '请输入检测成分' }],
   desc: [{ required: true, message: '请输入光谱描述' }]
-};
+}
 
 const columns = [
-  { label: '光谱名称', prop: 'spectrumName', width: 200, scopedSlots: 'spectrumName' },
+  {
+    label: '光谱名称',
+    prop: 'spectrumName',
+    width: 200,
+    scopedSlots: 'spectrumName'
+  },
   { label: '光谱类别', prop: 'type', width: 200, scopedSlots: 'type' },
   { label: '采用标准', prop: 'standard', width: 200, scopedSlots: 'standard' },
-  { label: '检测物质', prop: 'substance', width: 200, scopedSlots: 'substance' },
-  { label: '检测成分', prop: 'component', width: 200, scopedSlots: 'component' },
+  {
+    label: '检测物质',
+    prop: 'substance',
+    width: 200,
+    scopedSlots: 'substance'
+  },
+  {
+    label: '检测成分',
+    prop: 'component',
+    width: 200,
+    scopedSlots: 'component'
+  },
   { label: '导入时间', prop: 'time', width: 200, scopedSlots: 'time' },
   { label: '操作', prop: 'op', width: 140, scopedSlots: 'op' }
-];
+]
 
 const tableData = {
   totalCount: 3,
@@ -185,37 +200,77 @@ const tableData = {
   pageNo: 1,
   pageTotal: 1,
   list: []
-};
+}
 
 tableData.list = [
-  { specId: '1', spectrumName: '光谱名称1', type: '光谱类型1', standard: '采用标准1', substance: '被检测物1', component: '检测成分1', time: '2024-7-22' },
-  { specId: '1', spectrumName: '光谱名称1', type: '光谱类型1', standard: '采用标准1', substance: '被检测物1', component: '检测成分1', time: '2024-7-22' },
-  { specId: '1', spectrumName: '光谱名称1', type: '光谱类型1', standard: '采用标准1', substance: '被检测物1', component: '检测成分1', time: '2024-7-22' },
-  { specId: '1', spectrumName: '光谱名称1', type: '光谱类型1', standard: '采用标准1', substance: '被检测物1', component: '检测成分1', time: '2024-7-22' },
-  { specId: '1', spectrumName: '光谱名称1', type: '光谱类型1', standard: '采用标准1', substance: '被检测物1', component: '检测成分1', time: '2024-7-22' },
+  {
+    specId: '1',
+    spectrumName: '光谱名称1',
+    type: '光谱类型1',
+    standard: '采用标准1',
+    substance: '被检测物1',
+    component: '检测成分1',
+    time: '2024-7-22'
+  },
+  {
+    specId: '1',
+    spectrumName: '光谱名称1',
+    type: '光谱类型1',
+    standard: '采用标准1',
+    substance: '被检测物1',
+    component: '检测成分1',
+    time: '2024-7-22'
+  },
+  {
+    specId: '1',
+    spectrumName: '光谱名称1',
+    type: '光谱类型1',
+    standard: '采用标准1',
+    substance: '被检测物1',
+    component: '检测成分1',
+    time: '2024-7-22'
+  },
+  {
+    specId: '1',
+    spectrumName: '光谱名称1',
+    type: '光谱类型1',
+    standard: '采用标准1',
+    substance: '被检测物1',
+    component: '检测成分1',
+    time: '2024-7-22'
+  },
+  {
+    specId: '1',
+    spectrumName: '光谱名称1',
+    type: '光谱类型1',
+    standard: '采用标准1',
+    substance: '被检测物1',
+    component: '检测成分1',
+    time: '2024-7-22'
+  }
   // Add more items as needed
-];
+]
 
 const typeList = ref([
   { label: '拉曼光谱', value: '0' },
   { label: '红外光谱', value: '1' }
-]);
+])
 
 const stdList = ref([
   { label: 'ISO', value: '0' },
   { label: '国标', value: '1' }
-]);
+])
 
 const simulateUpload = () => {
-  isHidden.value = true;
-};
+  isHidden.value = true
+}
 
 const show = () => {
   if (formDataRef.value) {
-    formDataRef.value.resetFields();
+    formDataRef.value.resetFields()
   }
-  isHidden.value = false;
-};
+  isHidden.value = false
+}
 </script>
 
 <style lang="scss" scoped>
@@ -229,7 +284,9 @@ const show = () => {
   cursor: pointer;
 }
 .title {
-  font: bold 24px Arial, sans-serif;
+  font:
+    bold 24px Arial,
+    sans-serif;
   color: #333;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
   text-align: center;
@@ -243,8 +300,8 @@ const show = () => {
   width: 30%;
 }
 .data-panel {
-  .el-button{
-    width:100%;
+  .el-button {
+    width: 100%;
   }
 }
 .data-panel .el-input {

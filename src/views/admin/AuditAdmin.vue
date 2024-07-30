@@ -65,59 +65,54 @@
       </el-form>
     </div>
     <Table
-          :columns="columns"
-          :showPagination="true"
-          :dataSource="tableData"
-          :options="tableOptions"
-          :fetch="loadDataList"
-        >
-        <template #auditType="{ index, row }">
-            <div>{{row.auditType == 0 ? '申请解禁':'申请成为管理员'}}</div>
-        </template>
-        <template #userId="{ index, row }">
-            <div>{{row.userId}}</div>
-        </template>
-        <template #userName="{ index, row }">
-            <div>{{row.userName}}</div>
-        </template>
-        <template #email="{ index, row }">
-            <div>{{row.email}}</div>
-        </template>
-        <template #phone="{ index, row }">
-            <div>{{row.phone}}</div>
-        </template>
-        <template #address="{ index, row }">
-            <div>{{row.address}}</div>
-        </template>
-        <template #op="{ index, row}">
-          <div>
-            <el-button type="primary" size="small" @click="handleAudit(row.applyReason)">处理</el-button>
-          </div>
-        </template>
-    </Table>
-    <el-dialog
-        v-model="auditVisiable"
-        title="申请理由"
-        width="500"
+      :columns="columns"
+      :showPagination="true"
+      :dataSource="tableData"
+      :options="tableOptions"
+      :fetch="loadDataList"
     >
+      <template #auditType="{ index, row }">
+        <div>{{ row.auditType == 0 ? '申请解禁' : '申请成为管理员' }}</div>
+      </template>
+      <template #userId="{ index, row }">
+        <div>{{ row.userId }}</div>
+      </template>
+      <template #userName="{ index, row }">
+        <div>{{ row.userName }}</div>
+      </template>
+      <template #email="{ index, row }">
+        <div>{{ row.email }}</div>
+      </template>
+      <template #phone="{ index, row }">
+        <div>{{ row.phone }}</div>
+      </template>
+      <template #address="{ index, row }">
+        <div>{{ row.address }}</div>
+      </template>
+      <template #op="{ index, row }">
+        <div>
+          <el-button
+            type="primary"
+            size="small"
+            @click="handleAudit(row.applyReason)"
+            >处理</el-button
+          >
+        </div>
+      </template>
+    </Table>
+    <el-dialog v-model="auditVisiable" title="申请理由" width="500">
       <div class="detail">
         <div class="desc">{{ applyReason }}</div>
       </div>
       <template #footer>
         <div class="dialog-footer">
           <el-button type="primary" @click="audit(1)">通过</el-button>
-          <el-button type="primary" @click="audit(0)">
-            驳回
-          </el-button>
+          <el-button type="primary" @click="audit(0)"> 驳回 </el-button>
         </div>
       </template>
     </el-dialog>
 
-    <el-dialog
-        v-model="refuVisiable"
-        title="驳回原因"
-        width="500"
-    >
+    <el-dialog v-model="refuVisiable" title="驳回原因" width="500">
       <el-form
         :model="formData"
         :rules="rules"
@@ -151,13 +146,13 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-const formData = ref({});
-const formDataRef = ref();
+const formData = ref({})
+const formDataRef = ref()
 const rules = {
-  title: [{ required: true, message: "请输入内容" }],
-};
-const searchFormData = ref({});
-const searchFormDataRef = ref();
+  title: [{ required: true, message: '请输入内容' }]
+}
+const searchFormData = ref({})
+const searchFormDataRef = ref()
 const columns = [
   {
     label: '审核类型',
@@ -196,53 +191,55 @@ const columns = [
     scopedSlots: 'address'
   },
   {
-    label:'操作',
-    width:170,
-    scopedSlots:'op'
+    label: '操作',
+    width: 170,
+    scopedSlots: 'op'
   }
 ]
 const tableData = {
-  "totalCount":3, //总记录数
-  "pageSize":50,//分页大小
-  "pageNo":1,//页码
-  "pageTotal":1,//总页数
-  'list':[]
+  totalCount: 3, //总记录数
+  pageSize: 50, //分页大小
+  pageNo: 1, //页码
+  pageTotal: 1, //总页数
+  list: []
 }
 tableData.list = [
   {
-    "auditType":0,
-    'userId':'20240720001',
-    'userName':'大王',
-    'email':'4652133@qq.com',
-    'phone':'15478963541',
-    'address':'略',
-    'applyReason':'我错了',
+    auditType: 0,
+    userId: '20240720001',
+    userName: '大王',
+    email: '4652133@qq.com',
+    phone: '15478963541',
+    address: '略',
+    applyReason: '我错了'
   },
   {
-    "auditType":0,
-    'userId':'20240720001',
-    'userName':'大王',
-    'email':'4652133@qq.com',
-    'phone':'15478963541',
-    'address':'略',
-    'applyReason':'我错了',
-  },{
-    "auditType":1,
-    'userId':'20240720001',
-    'userName':'大王',
-    'email':'4652133@qq.com',
-    'phone':'15478963541',
-    'address':'略',
-    'applyReason':'我错了',
-  },{
-    "auditType":0,
-    'userId':'20240720001',
-    'userName':'大王',
-    'email':'4652133@qq.com',
-    'phone':'15478963541',
-    'address':'略',
-    'applyReason':'我错了',
+    auditType: 0,
+    userId: '20240720001',
+    userName: '大王',
+    email: '4652133@qq.com',
+    phone: '15478963541',
+    address: '略',
+    applyReason: '我错了'
   },
+  {
+    auditType: 1,
+    userId: '20240720001',
+    userName: '大王',
+    email: '4652133@qq.com',
+    phone: '15478963541',
+    address: '略',
+    applyReason: '我错了'
+  },
+  {
+    auditType: 0,
+    userId: '20240720001',
+    userName: '大王',
+    email: '4652133@qq.com',
+    phone: '15478963541',
+    address: '略',
+    applyReason: '我错了'
+  }
 ]
 tableData.totalCount = tableData.list.length
 const tableOptions = ref({
@@ -257,21 +254,21 @@ const handleAudit = (reason) => {
   applyReason.value = reason
 }
 const audit = (isPast) => {
-  if(isPast) {
+  if (isPast) {
     ElMessage({
-      type:'success',
-      message:'已通过'
+      type: 'success',
+      message: '已通过'
     })
   }
-  if(!isPast) {
+  if (!isPast) {
     refuVisiable.value = true
   }
   auditVisiable.value = false
 }
 const confirmRefu = () => {
   ElMessage({
-    type:'error',
-    message:'已驳回'
+    type: 'error',
+    message: '已驳回'
   })
   refuVisiable.value = false
 }
@@ -300,5 +297,4 @@ const confirmRefu = () => {
   display: flex;
   align-items: center; /* 垂直居中对齐 */
 }
-
 </style>

@@ -34,38 +34,36 @@
       </el-form>
     </div>
     <Table
-          :columns="columns"
-          :showPagination="true"
-          :dataSource="tableData"
-          :options="tableOptions"
-          :fetch="loadDataList"
-        >
-        <template #spectrumName="{ index, row }">
-            <div>{{row.spectrumName}}</div>
-        </template>
-        <template #standard="{ index, row }">
-            <div>{{row.standard}}</div>
-        </template>
-        <template #substance="{ index, row }">
-            <div>{{row.substance}}</div>
-        </template>
-        <template #component="{ index, row }">
-            <div>{{row.component}}</div>
-        </template>
-        <template #op="{ index, row}">
-          <div>
-            <el-button type="primary" size="small" @click="showDetail">查看详情</el-button>
-            <el-button type="danger" size="small" @click="del">移除</el-button>
-          </div>
-        </template>
-    </Table>
-    <el-dialog
-        v-model="detailVisiable"
-        title="光谱详情"
-        width="500"
+      :columns="columns"
+      :showPagination="true"
+      :dataSource="tableData"
+      :options="tableOptions"
+      :fetch="loadDataList"
     >
+      <template #spectrumName="{ index, row }">
+        <div>{{ row.spectrumName }}</div>
+      </template>
+      <template #standard="{ index, row }">
+        <div>{{ row.standard }}</div>
+      </template>
+      <template #substance="{ index, row }">
+        <div>{{ row.substance }}</div>
+      </template>
+      <template #component="{ index, row }">
+        <div>{{ row.component }}</div>
+      </template>
+      <template #op="{ index, row }">
+        <div>
+          <el-button type="primary" size="small" @click="showDetail"
+            >查看详情</el-button
+          >
+          <el-button type="danger" size="small" @click="del">移除</el-button>
+        </div>
+      </template>
+    </Table>
+    <el-dialog v-model="detailVisiable" title="光谱详情" width="500">
       <div class="detail">
-        <img src="../../assets/光谱主界面背景.jpg" width="100%"/>
+        <img src="../../assets/光谱主界面背景.jpg" width="100%" />
         <div>光谱描述balabala</div>
       </div>
       <template #footer>
@@ -82,8 +80,8 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-const searchFormData = ref({});
-const searchFormDataRef = ref();
+const searchFormData = ref({})
+const searchFormDataRef = ref()
 const columns = [
   {
     label: '光谱名称',
@@ -113,46 +111,46 @@ const columns = [
     label: '操作',
     width: 170,
     scopedSlots: 'op'
-  },
+  }
 ]
 const tableData = {
-  "totalCount":3, //总记录数
-  "pageSize":50,//分页大小
-  "pageNo":1,//页码
-  "pageTotal":1,//总页数
-  'list':[]
+  totalCount: 3, //总记录数
+  pageSize: 50, //分页大小
+  pageNo: 1, //页码
+  pageTotal: 1, //总页数
+  list: []
 }
 tableData.list = [
   {
-    "spectrumName":'拉曼光谱1',
-    'standard':'ISO',
-    'substance':'土豆',
-    'component':'蛋白质',
+    spectrumName: '拉曼光谱1',
+    standard: 'ISO',
+    substance: '土豆',
+    component: '蛋白质'
   },
   {
-    "spectrumName":'拉曼光谱1',
-    'standard':'ISO',
-    'substance':'土豆',
-    'component':'蛋白质',
+    spectrumName: '拉曼光谱1',
+    standard: 'ISO',
+    substance: '土豆',
+    component: '蛋白质'
   },
   {
-    "spectrumName":'拉曼光谱1',
-    'standard':'ISO',
-    'substance':'土豆',
-    'component':'蛋白质',
+    spectrumName: '拉曼光谱1',
+    standard: 'ISO',
+    substance: '土豆',
+    component: '蛋白质'
   },
   {
-    "spectrumName":'拉曼光谱1',
-    'standard':'ISO',
-    'substance':'土豆',
-    'component':'蛋白质',
+    spectrumName: '拉曼光谱1',
+    standard: 'ISO',
+    substance: '土豆',
+    component: '蛋白质'
   },
   {
-    "spectrumName":'拉曼光谱1',
-    'standard':'ISO',
-    'substance':'土豆',
-    'component':'蛋白质',
-  },
+    spectrumName: '拉曼光谱1',
+    standard: 'ISO',
+    substance: '土豆',
+    component: '蛋白质'
+  }
 ]
 tableData.totalCount = tableData.list.length
 const tableOptions = ref({
@@ -164,29 +162,24 @@ const showDetail = () => {
   detailVisiable.value = true
 }
 const del = () => {
-  ElMessageBox.confirm(
-    '请确认将该光谱从标准库中移除',
-    'Warning',
-    {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
-    }
-  )
+  ElMessageBox.confirm('请确认将该光谱从标准库中移除', 'Warning', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
     .then(() => {
       ElMessage({
         type: 'success',
-        message: '删除成功',
+        message: '删除成功'
       })
     })
     .catch(() => {
       ElMessage({
         type: 'info',
-        message: '删除取消',
+        message: '删除取消'
       })
     })
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

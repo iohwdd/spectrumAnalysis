@@ -42,33 +42,34 @@
       </el-form>
     </div>
     <Table
-          :columns="columns"
-          :showPagination="true"
-          :dataSource="tableData"
-          :options="tableOptions"
-          :fetch="loadDataList"
-        >
-        <template #algoName="{ index, row }">
-            <div>{{row.algoName}}</div>
-        </template>
-        <template #algoType="{ index, row }">
-            <div>{{row.algoType}}</div>
-        </template>
-        <template #algoVersion="{ index, row }">
-            <div>{{row.algoVersion}}</div>
-        </template>
-        <template #op="{ index, row}">
-          <div>
-            <el-button type="primary" size="small" @click="showDetail(row.algoDesc)">查看详情</el-button>
-            <el-button type="danger" size="small" @click="del">移除</el-button>
-          </div>
-        </template>
-    </Table>
-    <el-dialog
-        v-model="detailVisiable"
-        title="算法详情"
-        width="500"
+      :columns="columns"
+      :showPagination="true"
+      :dataSource="tableData"
+      :options="tableOptions"
+      :fetch="loadDataList"
     >
+      <template #algoName="{ index, row }">
+        <div>{{ row.algoName }}</div>
+      </template>
+      <template #algoType="{ index, row }">
+        <div>{{ row.algoType }}</div>
+      </template>
+      <template #algoVersion="{ index, row }">
+        <div>{{ row.algoVersion }}</div>
+      </template>
+      <template #op="{ index, row }">
+        <div>
+          <el-button
+            type="primary"
+            size="small"
+            @click="showDetail(row.algoDesc)"
+            >查看详情</el-button
+          >
+          <el-button type="danger" size="small" @click="del">移除</el-button>
+        </div>
+      </template>
+    </Table>
+    <el-dialog v-model="detailVisiable" title="算法详情" width="500">
       <div class="detail">
         <div class="desc">{{ algoDesc }}</div>
       </div>
@@ -87,13 +88,13 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-const searchFormData = ref({});
-const searchFormDataRef = ref();
+const searchFormData = ref({})
+const searchFormDataRef = ref()
 const processList = ref([
   { label: '光谱基准线扣除', value: '光谱基准线扣除' },
   { label: '平滑降噪', value: '平滑降噪' },
-  { label:'特征波长提取',value:'特征波长提取'}
-]);
+  { label: '特征波长提取', value: '特征波长提取' }
+])
 const columns = [
   {
     label: '算法名称',
@@ -117,46 +118,46 @@ const columns = [
     label: '操作',
     width: 170,
     scopedSlots: 'op'
-  },
+  }
 ]
 const tableData = {
-  "totalCount":3, //总记录数
-  "pageSize":50,//分页大小
-  "pageNo":1,//页码
-  "pageTotal":1,//总页数
-  'list':[]
+  totalCount: 3, //总记录数
+  pageSize: 50, //分页大小
+  pageNo: 1, //页码
+  pageTotal: 1, //总页数
+  list: []
 }
 tableData.list = [
   {
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
   },
   {
-    "algoName":'算法1',
-    'algoType':'平滑降噪',
-    'algoDesc':'算法描述balabala',
-    'algoVersion':'1.0',
-  },
+    algoName: '算法1',
+    algoType: '平滑降噪',
+    algoDesc: '算法描述balabala',
+    algoVersion: '1.0'
+  }
 ]
 tableData.totalCount = tableData.list.length
 const tableOptions = ref({
@@ -170,25 +171,21 @@ const showDetail = (desc) => {
   algoDesc.value = desc
 }
 const del = () => {
-  ElMessageBox.confirm(
-    '请确认将该算法从算法库中移除',
-    'Warning',
-    {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
-    }
-  )
+  ElMessageBox.confirm('请确认将该算法从算法库中移除', 'Warning', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
     .then(() => {
       ElMessage({
         type: 'success',
-        message: '删除成功',
+        message: '删除成功'
       })
     })
     .catch(() => {
       ElMessage({
         type: 'info',
-        message: '删除取消',
+        message: '删除取消'
       })
     })
 }

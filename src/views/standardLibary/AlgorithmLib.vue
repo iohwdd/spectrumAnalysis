@@ -27,36 +27,32 @@
       </el-col>
     </el-row>
     <Table
-          :columns="columns"
-          :showPagination="true"
-          :dataSource="tableData"
-          :options="tableOptions"
-          :fetch="loadDataList"
-        >
-        <template #algorithm="{ index, row }">
-            <div>{{row.algorithm}}</div>
-        </template>
-        <template #type="{ index, row }">
-            <div>{{row.type}}</div>
-        </template>
-        <template #version="{ index, row }">
-            <div>{{ row.version }}</div>
-        </template>
-        <template #time="{ index, row }">
-            <div>{{row.time}}</div>
-        </template>
-        <template #op="{ index, row }">
-            <div>
-              <span class="a-link" @click="descVisiable = true">查看描述</span>
-              <span class="a-link">下载</span>
-            </div>
-        </template>
-    </Table>
-    <el-dialog
-        v-model="descVisiable"
-        title="算法描述"
-        width="500"
+      :columns="columns"
+      :showPagination="true"
+      :dataSource="tableData"
+      :options="tableOptions"
+      :fetch="loadDataList"
     >
+      <template #algorithm="{ index, row }">
+        <div>{{ row.algorithm }}</div>
+      </template>
+      <template #type="{ index, row }">
+        <div>{{ row.type }}</div>
+      </template>
+      <template #version="{ index, row }">
+        <div>{{ row.version }}</div>
+      </template>
+      <template #time="{ index, row }">
+        <div>{{ row.time }}</div>
+      </template>
+      <template #op="{ index, row }">
+        <div>
+          <span class="a-link" @click="descVisiable = true">查看描述</span>
+          <span class="a-link">下载</span>
+        </div>
+      </template>
+    </Table>
+    <el-dialog v-model="descVisiable" title="算法描述" width="500">
       <span>算法描述balabala...</span>
       <template #footer>
         <div class="dialog-footer">
@@ -96,48 +92,48 @@ const columns = [
     prop: 'op',
     width: 400,
     scopedSlots: 'op'
-  },
+  }
 ]
 const tableData = {
-  "totalCount":3, //总记录数
-  "pageSize":50,//分页大小
-  "pageNo":1,//页码
-  "pageTotal":1,//总页数
-  'list':[]
+  totalCount: 3, //总记录数
+  pageSize: 50, //分页大小
+  pageNo: 1, //页码
+  pageTotal: 1, //总页数
+  list: []
 }
 tableData.list = [
   {
-    "algorithm":'算法1',
-    'type':'平滑降噪',
-    'version':'1.0',
-    'time':'2024-7-16',
-    'op':'-'
+    algorithm: '算法1',
+    type: '平滑降噪',
+    version: '1.0',
+    time: '2024-7-16',
+    op: '-'
   },
   {
-    "algorithm":'算法2',
-    'type':'平滑降噪',
-    'version':'1.0',
-    'time':'2024-7-16',
-    'op':'-'
+    algorithm: '算法2',
+    type: '平滑降噪',
+    version: '1.0',
+    time: '2024-7-16',
+    op: '-'
   },
   {
-    "algorithm":'算法3',
-    'type':'平滑降噪',
-    'version':'1.0',
-    'time':'2024-7-16',
-    'op':'-'
-  },
+    algorithm: '算法3',
+    type: '平滑降噪',
+    version: '1.0',
+    time: '2024-7-16',
+    op: '-'
+  }
 ]
 tableData.totalCount = tableData.list.length
 const tableOptions = ref({
   selectType: 'checkbox',
   extHeight: 110
 })
-const searchFormData = ref({});
-const searchFormDataRef = ref();
+const searchFormData = ref({})
+const searchFormDataRef = ref()
 const rules = {
-  title: [{ required: true, message: "请输入内容" }],
-};
+  title: [{ required: true, message: '请输入内容' }]
+}
 </script>
 
 <style lang="scss" scoped>
@@ -163,5 +159,4 @@ const rules = {
 .el-form-item {
   margin-bottom: 0; /* 移除表单项的底部外边距 */
 }
-
 </style>
